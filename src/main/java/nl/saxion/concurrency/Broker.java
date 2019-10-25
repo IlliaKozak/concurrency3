@@ -8,7 +8,7 @@ public class Broker extends AbstractActor {
     ActorSystem system;
     @Override
     public void preStart() throws Exception {
-        getContext().getSystem().getEventStream().subscribe(getSelf(),GetBroker.class);
+        getContext().getSystem().getEventStream().subscribe(getSelf(), GetBroker.class);
 
     }
 

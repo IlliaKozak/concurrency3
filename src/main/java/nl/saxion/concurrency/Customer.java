@@ -35,8 +35,9 @@ public class Customer extends AbstractActor {
             if(broker == null){
                 broker = actorRef;
 
-                for (int i = 0; i <10 ; i++) {
+                for (int i = 0; i <1 ; i++) {
                     broker.tell("I want to reserve a room", getSelf());
+
                 }
             }
         })
