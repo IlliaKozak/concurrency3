@@ -3,8 +3,11 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.http.javadsl.server.AllDirectives;
+import akka.routing.RoundRobinPool;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import scala.sys.Prop;
+
 import java.net.InetAddress;
 
 
@@ -19,7 +22,16 @@ public class Main {
 
     public void startUp(String[] args)  {
 
-        system = ActorSystem.create(/*PUT YOUR OWN NAME HERE */,getConfig(args));
+        system = ActorSystem.create("HotelBooking",getConfig(args));
+         ActorRef broker = system.actorOf(new RoundRobinPool(5).props(Props.create(Broker.class)),"router");
+
+        ActorRef customer = system.actorOf(Props.create(Customer.class),"customer");
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
